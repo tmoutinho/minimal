@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Untitled</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      window.process = { env: { NODE_ENV: "development" } };
+    </script>
+  </head>
+  <body>
+    <script type="importmap">
+      {
+        "imports": {
+          "@remix-run/router": "https://ga.jspm.io/npm:@remix-run/router@0.2.0-pre.2/dist/index.js",
+          "htm/preact": "https://ga.jspm.io/npm:htm@3.1.1/preact/index.module.js",
+          "preact": "https://ga.jspm.io/npm:preact@10.8.1/dist/preact.module.js",
+          "preact/hooks": "https://ga.jspm.io/npm:preact@10.8.1/hooks/dist/hooks.module.js"
+        },
+        "scopes": {
+          "https://ga.jspm.io/": {
+            "htm": "https://ga.jspm.io/npm:htm@3.1.1/dist/htm.module.js"
+          }
+        }
+      }
+    </script>
+
+    <script
+      async
+      src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script type="module">
+      import * as htmPreact from "htm/preact";
+      import * as preact from "preact";
+      import * as preactHooks from "preact/hooks";
+
+      const renderComponent = htmPreact.html;
+
+      function App(props) {
+        const [counter, setCounter] = preactHooks.useState(0);
+        const handlePlus = () => {
+          setCounter((prev) => prev + 1);
+        };
+        const handleMinus = () => {
+          setCounter((prev) => prev - 1);
+        };
+
+        return renderComponent`
+          <div>
+            <h1>Hello World!!</h1>
+            <h2>Counter: ${counter}!</h2>
+            <button onClick=${handlePlus}>Plus</button>
+            <button onClick=${handleMinus}>Minus</button>
+          </div>
+        `;
+      }
+
+      const main = renderComponent`<${App} />`;
+
+      preact.render(main, document.body);
+    </script>
+  </body>
+</html>
